@@ -2,7 +2,10 @@ package io.github.nevemlaci;
 
 import java.awt.*;
 
-public class GregtechElement {
+/**
+ * A helper class to keep track of the properties of a Gregtech material.
+ */
+public class GregtechMaterial {
     private String registryName;
     private String displayName;
     private String type;
@@ -75,74 +78,74 @@ public class GregtechElement {
     }
 
 
-    GregtechElement() {}
+    GregtechMaterial() {}
 
-    public GregtechElement registryName(String registryName){
+    public GregtechMaterial registryName(String registryName){
         this.registryName = registryName;
         return this;
     }
 
-    public GregtechElement displayName(String displayName){
+    public GregtechMaterial displayName(String displayName){
         this.displayName = displayName;
         return this;
     }
 
-    public GregtechElement type(String type){
+    public GregtechMaterial type(String type){
         this.type = type;
         return this;
     }
 
-    public GregtechElement components(String components){
+    public GregtechMaterial components(String components){
         this.components = components;
         return this;
     }
 
-    public GregtechElement formula(String formula){
+    public GregtechMaterial formula(String formula){
         this.formula = formula;
         return this;
     }
 
-    public GregtechElement color(Color color){
+    public GregtechMaterial color(Color color){
         this.color = color;
         return this;
     }
 
-    public GregtechElement isCable(boolean isCable){
+    public GregtechMaterial isCable(boolean isCable){
         this.isCable = isCable;
         return this;
     }
 
-    public GregtechElement voltage(String voltage){
+    public GregtechMaterial voltage(String voltage){
         this.voltage = voltage;
         return this;
     }
 
-    public GregtechElement loss(int loss){
+    public GregtechMaterial loss(int loss){
         this.loss = loss;
         return this;
     }
 
-    public GregtechElement isSuperconductor(boolean isSuperconductor){
+    public GregtechMaterial isSuperconductor(boolean isSuperconductor){
         this.isSuperconductor = isSuperconductor;
         return this;
     }
 
-    public GregtechElement blastTemp(int blastTemp){
+    public GregtechMaterial blastTemp(int blastTemp){
         this.blastTemp = blastTemp;
         return this;
     }
 
-    public GregtechElement blastGas(int blastGas){
+    public GregtechMaterial blastGas(int blastGas){
         this.blastGas = blastGas;
         return this;
     }
 
-    public GregtechElement blastVoltage(String blastVoltage){
+    public GregtechMaterial blastVoltage(String blastVoltage){
         this.blastVoltage = blastVoltage;
         return this;
     }
 
-    public GregtechElement blastDuration(int blastDuration){
+    public GregtechMaterial blastDuration(int blastDuration){
         this.blastDuration = blastDuration;
         return this;
     }

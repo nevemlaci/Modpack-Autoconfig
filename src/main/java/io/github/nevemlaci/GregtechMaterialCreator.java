@@ -12,11 +12,15 @@ import java.nio.file.StandardOpenOption;
 
 import static io.github.nevemlaci.NormalLookingComponentFactory.NormalLookingComponent;
 
-public class GregtechElementCreator extends JPanel {
+public class GregtechMaterialCreator extends JPanel {
 
     private final MainMenu app;
 
-    public GregtechElementCreator(MainMenu app) {
+    /**
+     * yeah...
+     * @param app
+     */
+    public GregtechMaterialCreator(MainMenu app) {
         this.app = app;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -85,8 +89,8 @@ public class GregtechElementCreator extends JPanel {
         add(saveMatiralToFile);
 
         saveMatiralToFile.addActionListener(_ -> {
-            GregtechElement element = new GregtechElement();
-            element.registryName(registryName.getText())
+            GregtechMaterial material = new GregtechMaterial();
+            material.registryName(registryName.getText())
                     .displayName(displayName.getText())
                     .type(type.getSelectedItem().toString())
                     .components(components.getText())
@@ -101,19 +105,24 @@ public class GregtechElementCreator extends JPanel {
                     .blastVoltage(blastVoltage.getSelectedItem().toString())
                     .blastDuration(blastDuration.getText().isEmpty() ? 0 : Integer.parseInt(blastDuration.getText()));
 
-            String content = buildElement(element);
+            String content = buildMaterialScript(material);
 
-            writeToFile(content, element);
+            writeToFile(content, material);
         });
     }
 
-    private String buildElement(GregtechElement element) {
-        String[] componentsArray = element.getComponents().split(",");
+    /**
+     * Builds the kubeJS script for the material
+     * @param material the material
+     * @return the script
+     */
+    private String buildMaterialScript(GregtechMaterial material) {
+        String[] componentsArray = material.getComponents().split(",");
 
         String startupScript =
                         "GTCEuStartupEvents.registry('gtceu:material', event => {\n\t"
-                        + "event.create('" + element.getRegistryName() + "')\n\t\t"
-                        + "." + element.getType() + "()\n\t\t"
+                        + "event.create('" + material.getRegistryName() + "')\n\t\t"
+                        + "." + material.getType() + "()\n\t\t"
                         + ".components(";
 
         for (String component : componentsArray) {
@@ -121,25 +130,25 @@ public class GregtechElementCreator extends JPanel {
         }
         startupScript = startupScript.substring(0, startupScript.length() - 2);
         startupScript += ")\n\t\t";
-        startupScript += ".color(0x" + Integer.toHexString(element.getColor().getRGB()).substring(2) + ").iconSet(GTMaterialIconSet.BRIGHT)\n\t\t";
+        startupScript += ".color(0x" + Integer.toHexString(material.getColor().getRGB()).substring(2) + ").iconSet(GTMaterialIconSet.BRIGHT)\n\t\t";
 
-        if (element.isCable()) {
+        if (material.isCable()) {
             startupScript +=
                             ".cableProperties("
-                            + "GTValues.V[GTValues." + element.getVoltage() + "], "
-                            + "1," + (element.isSuperconductor() ? "0, true" : element.getLoss() + "false") + ")\n\t\t";
+                            + "GTValues.V[GTValues." + material.getVoltage() + "], "
+                            + "1," + (material.isSuperconductor() ? "0, true" : material.getLoss() + "false") + ")\n\t\t";
         }
 
-        if (element.getBlastTemp() != 0) {
-            if (element.getBlastTemp() < 0) {
+        if (material.getBlastTemp() != 0) {
+            if (material.getBlastTemp() < 0) {
                 throw new IllegalArgumentException("Blast Temperature must be positive or zero/empty");
             }
             startupScript +=
                             ".blastTemp("
-                            + element.getBlastTemp() + ", "
-                            + (element.getBlastGas() > 0 ? element.getBlastGas() : "null") + ", "
-                            + "GTValues.V[GTValues." + element.getBlastVoltage() + "], "
-                            + element.getBlastDuration() + ")\n";
+                            + material.getBlastTemp() + ", "
+                            + (material.getBlastGas() > 0 ? material.getBlastGas() : "null") + ", "
+                            + "GTValues.V[GTValues." + material.getBlastVoltage() + "], "
+                            + material.getBlastDuration() + ")\n";
         }
 
         startupScript += "});\n\n\n";
@@ -147,11 +156,11 @@ public class GregtechElementCreator extends JPanel {
         return startupScript;
     }
 
-    private void writeToFile(String content, GregtechElement element) {
+    private void writeToFile(String content, GregtechMaterial material) {
         JFileChooser fileChooser = new JFileChooser(app.getWorkingDirectory() + "/kubejs/startup_scripts");
         fileChooser.setDialogTitle("Save material to file...");
         fileChooser.setApproveButtonText("Save");
-        fileChooser.setSelectedFile(new File(element.getRegistryName() + ".js"));
+        fileChooser.setSelectedFile(new File(material.getRegistryName() + ".js"));
         fileChooser.showSaveDialog(this);
 
         try {
@@ -164,7 +173,7 @@ public class GregtechElementCreator extends JPanel {
             }
         }
 
-        if (!element.getDisplayName().isEmpty()) {
+        if (!material.getDisplayName().isEmpty()) {
             File file = new File(app.getWorkingDirectory() + "/kubejs/assets/gtceu/lang/en_us.json");
             String jsonStr = null;
             try {
@@ -174,7 +183,7 @@ public class GregtechElementCreator extends JPanel {
             }
 
             JSONObject json = new JSONObject(jsonStr);
-            json.put("material.gtceu." + element.getRegistryName(), element.getDisplayName());
+            json.put("material.gtceu." + material.getRegistryName(), material.getDisplayName());
 
             try {
                 Files.write(file.toPath(), json.toString(4).getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
@@ -184,13 +193,13 @@ public class GregtechElementCreator extends JPanel {
         }
     }
 
-    public static class GregtechElementCreatorWindow extends JFrame {
-        public GregtechElementCreatorWindow(MainMenu app) {
-            setTitle("Gregtech Element Creator");
+    public static class GregtechMaterialCreatorWindow extends JFrame {
+        public GregtechMaterialCreatorWindow(MainMenu app) {
+            setTitle("Gregtech Material Creator");
             setSize(800, 900);
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             setLocationRelativeTo(null);
-            JScrollPane scrollPane = new JScrollPane(new GregtechElementCreator(app));
+            JScrollPane scrollPane = new JScrollPane(new GregtechMaterialCreator(app));
             scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
             scrollPane.getVerticalScrollBar().setUnitIncrement(16);

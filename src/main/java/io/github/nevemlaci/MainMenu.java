@@ -1,7 +1,6 @@
 package io.github.nevemlaci;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.Serializable;
 
 import static io.github.nevemlaci.NormalLookingComponentFactory.NormalLookingComponent;
@@ -22,10 +21,10 @@ public class MainMenu extends JFrame implements Serializable {
         setLocationRelativeTo(null);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        JButton newGregtechElement = NormalLookingComponent(new JButton("New Gregtech Element"));
+        JButton newGregtechElement = NormalLookingComponent(new JButton("New Gregtech Material..."));
 
         add(newGregtechElement);
-        newGregtechElement.addActionListener(e -> new GregtechElementCreator.GregtechElementCreatorWindow(this));
+        newGregtechElement.addActionListener(e -> new GregtechMaterialCreator.GregtechMaterialCreatorWindow(this));
 
         JFileChooser workingDirectoryChooser = new JFileChooser(workingDirectory);
         workingDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
