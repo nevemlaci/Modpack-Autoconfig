@@ -21,6 +21,8 @@ tasks.test {
     useJUnitPlatform()
 }
 
-application {
-    mainClass.set("io.github.nevemlaci.Main")
+tasks.jar{
+    manifest{
+        attributes["Main-Class"] = "io.github.nevemlaci.Main"
+    }
 }

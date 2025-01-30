@@ -9,7 +9,7 @@ A tool for automatically generating config files and kubejs scripts for Minecraf
 
 ## Build
 * Clone the repository
-* Run `./gradlew build` in the root directory of the repository
+* Run `./gradlew jar` in the root directory of the repository
 * The jar file will be in `build/libs/`
 
 #### Requirements:
