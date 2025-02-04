@@ -62,7 +62,8 @@ public class MainMenu extends JFrame implements Serializable {
         workingDirectoryChooser.showOpenDialog(this);
         var selectedWorkingDirectory = workingDirectoryChooser.getSelectedFile();
         if (selectedWorkingDirectory == null) {
-            throw new NullWorkingDirectoryException();
+            JOptionPane.showConfirmDialog(this, "Please select a working directory", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            workingDirectorySelector();
         }
         workingDirectory = workingDirectoryChooser.getSelectedFile().getAbsolutePath();
     }
@@ -71,9 +72,4 @@ public class MainMenu extends JFrame implements Serializable {
         return workingDirectory;
     }
 
-    private static class NullWorkingDirectoryException extends RuntimeException {
-        public NullWorkingDirectoryException() {
-            super("Working directory not selected");
-        }
-    }
 }
