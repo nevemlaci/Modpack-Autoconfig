@@ -34,9 +34,7 @@ public class GregtechMaterialCreator extends JPanel {
         displayName.setToolTipText("Display Name");
         add(displayName);
         JButton autoRegistryName = new JButton("Generate registry name");
-        autoRegistryName.addActionListener(_ -> {
-            registryName.setText(displayName.getText().toLowerCase().replace(" ", "_"));
-        });
+        autoRegistryName.addActionListener(event -> registryName.setText(displayName.getText().toLowerCase().replace(" ", "_")));
         add(autoRegistryName);
 
         add(new JLabel("Components:"));
@@ -88,7 +86,7 @@ public class GregtechMaterialCreator extends JPanel {
         saveMatiralToFile.setMaximumSize(new Dimension(200, 20));
         add(saveMatiralToFile);
 
-        saveMatiralToFile.addActionListener(_ -> {
+        saveMatiralToFile.addActionListener(event -> {
             GregtechMaterial material = new GregtechMaterial();
             material.registryName(registryName.getText())
                     .displayName(displayName.getText())
@@ -119,6 +117,7 @@ public class GregtechMaterialCreator extends JPanel {
     private String buildMaterialScript(GregtechMaterial material) {
         String[] componentsArray = material.getComponents().split(",");
 
+        //TODO make this use the new JS helper API
         String startupScript =
                         "GTCEuStartupEvents.registry('gtceu:material', event => {\n\t"
                         + "event.create('" + material.getRegistryName() + "')\n\t\t"
@@ -126,8 +125,9 @@ public class GregtechMaterialCreator extends JPanel {
                         + ".components(";
 
         for (String component : componentsArray) {
-            startupScript += "'" + component.replaceAll(" ", "") + "', ";
+            startupScript += "'" + component + "', ";
         }
+
         startupScript = startupScript.substring(0, startupScript.length() - 2);
         startupScript += ")\n\t\t";
         startupScript += ".color(0x" + Integer.toHexString(material.getColor().getRGB()).substring(2) + ").iconSet(GTMaterialIconSet.BRIGHT)\n\t\t";
@@ -193,8 +193,8 @@ public class GregtechMaterialCreator extends JPanel {
         }
     }
 
-    public static class GregtechMaterialCreatorWindow extends JFrame {
-        public GregtechMaterialCreatorWindow(MainMenu app) {
+    public static class Window extends JFrame {
+        public Window(MainMenu app) {
             setTitle("Gregtech Material Creator");
             setSize(800, 900);
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

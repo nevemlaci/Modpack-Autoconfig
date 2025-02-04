@@ -96,6 +96,7 @@ public class GregtechMaterial {
     }
 
     public GregtechMaterial components(String components){
+        components = components.replaceAll(" ", "");
         this.components = components;
         return this;
     }

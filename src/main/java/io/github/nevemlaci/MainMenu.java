@@ -24,7 +24,11 @@ public class MainMenu extends JFrame implements Serializable {
         JButton newGregtechElement = NormalLookingComponent(new JButton("New Gregtech Material..."));
 
         add(newGregtechElement);
-        newGregtechElement.addActionListener(e -> new GregtechMaterialCreator.GregtechMaterialCreatorWindow(this));
+        newGregtechElement.addActionListener(e -> new GregtechMaterialCreator.Window(this));
+
+        JButton newGregtechMixerRecipe = NormalLookingComponent(new JButton("New Simple Gregtech Recipe..."));
+        add(newGregtechMixerRecipe);
+        newGregtechMixerRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator.Window(this));
 
         JFileChooser workingDirectoryChooser = new JFileChooser(workingDirectory);
         workingDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
