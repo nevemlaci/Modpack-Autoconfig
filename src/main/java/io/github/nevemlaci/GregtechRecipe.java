@@ -52,12 +52,4 @@ public class GregtechRecipe {
                     )
             );
     }
-
-    public String toMixerRecipe(){
-        return toKubeJS("mixer");
-    }
-
-    public String toAlloySmelterRecipe(){
-        return toKubeJS("alloy_smelter");
-    }
 }
