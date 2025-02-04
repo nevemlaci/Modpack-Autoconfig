@@ -25,10 +25,17 @@ public class MainMenu extends JFrame implements Serializable {
         menuBar.add(gtceu);
         JMenuItem gtceuConfig = new JMenuItem("Add new material...");
         gtceu.add(gtceuConfig);
-        gtceuConfig.addActionListener(e -> new GregtechMaterialCreator(this));
+        gtceuConfig.addActionListener(e -> new GregtechMaterialCreator.Window(this));
         JMenuItem gtceuRecipe = new JMenuItem("Add new recipe...");
         gtceu.add(gtceuRecipe);
-        gtceuRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator(this));
+        gtceuRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator.Window(this));
+
+        JMenu options = new JMenu("Options");
+        menuBar.add(options);
+        JMenuItem workingDirectory = new JMenuItem("Change Working Directory...");
+        options.add(workingDirectory);
+        workingDirectory.addActionListener(e -> workingDirectorySelector());
+
 
 //        JButton newGregtechElement = NormalLookingComponentFactory.normalLookingComponent(new JButton("New Gregtech Material..."));
 //
@@ -39,6 +46,12 @@ public class MainMenu extends JFrame implements Serializable {
 //        add(newGregtechMixerRecipe);
 //        newGregtechMixerRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator.Window(this));
 
+        workingDirectorySelector();
+
+        setVisible(true);
+    }
+
+    private void workingDirectorySelector(){
         JFileChooser workingDirectoryChooser = new JFileChooser(workingDirectory);
         workingDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         workingDirectoryChooser.setDialogTitle("Select Working Directory");
@@ -46,8 +59,6 @@ public class MainMenu extends JFrame implements Serializable {
         workingDirectoryChooser.showOpenDialog(this);
 
         workingDirectory = workingDirectoryChooser.getSelectedFile().getAbsolutePath();
-
-        setVisible(true);
     }
 
     public String getWorkingDirectory() {
