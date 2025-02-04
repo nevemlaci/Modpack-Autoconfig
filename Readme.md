@@ -3,7 +3,8 @@ A tool for automatically generating config files and kubejs scripts for Minecraf
 
 ## Currently supported features:
 
-* New GregTech materials(Dusts/Ingots, Wires, Blast Furnace recipes)
+* New GregTech materials (Dusts/Ingots, Wires, Blast Furnace recipes)
+* New GregTech recipes
 
 
 
