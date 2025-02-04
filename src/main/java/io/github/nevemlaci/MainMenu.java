@@ -3,8 +3,6 @@ package io.github.nevemlaci;
 import javax.swing.*;
 import java.io.Serializable;
 
-import static io.github.nevemlaci.NormalLookingComponentFactory.NormalLookingComponent;
-
 public class MainMenu extends JFrame implements Serializable {
     private String workingDirectory = null;
 
@@ -21,14 +19,25 @@ public class MainMenu extends JFrame implements Serializable {
         setLocationRelativeTo(null);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        JButton newGregtechElement = NormalLookingComponent(new JButton("New Gregtech Material..."));
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        JMenu gtceu = new JMenu("GTCEU");
+        menuBar.add(gtceu);
+        JMenuItem gtceuConfig = new JMenuItem("Add new material...");
+        gtceu.add(gtceuConfig);
+        gtceuConfig.addActionListener(e -> new GregtechMaterialCreator(this));
+        JMenuItem gtceuRecipe = new JMenuItem("Add new recipe...");
+        gtceu.add(gtceuRecipe);
+        gtceuRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator(this));
 
-        add(newGregtechElement);
-        newGregtechElement.addActionListener(e -> new GregtechMaterialCreator.Window(this));
-
-        JButton newGregtechMixerRecipe = NormalLookingComponent(new JButton("New Simple Gregtech Recipe..."));
-        add(newGregtechMixerRecipe);
-        newGregtechMixerRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator.Window(this));
+//        JButton newGregtechElement = NormalLookingComponentFactory.normalLookingComponent(new JButton("New Gregtech Material..."));
+//
+//        add(newGregtechElement);
+//        newGregtechElement.addActionListener(e -> new GregtechMaterialCreator.Window(this));
+//
+//        JButton newGregtechMixerRecipe = NormalLookingComponentFactory.normalLookingComponent(new JButton("New Simple Gregtech Recipe..."), 300);
+//        add(newGregtechMixerRecipe);
+//        newGregtechMixerRecipe.addActionListener(e -> new GregtechSimpleRecipeCreator.Window(this));
 
         JFileChooser workingDirectoryChooser = new JFileChooser(workingDirectory);
         workingDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

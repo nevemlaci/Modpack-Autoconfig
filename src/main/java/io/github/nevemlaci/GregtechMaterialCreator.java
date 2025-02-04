@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import static io.github.nevemlaci.NormalLookingComponentFactory.NormalLookingComponent;
+import static io.github.nevemlaci.NormalLookingComponentFactory.normalLookingComponent;
 
 public class GregtechMaterialCreator extends JPanel {
 
@@ -25,12 +25,12 @@ public class GregtechMaterialCreator extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         add(new JLabel("Registry Name:"));
-        JTextField registryName = NormalLookingComponent(new JTextField());
+        JTextField registryName = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         registryName.setToolTipText("Registry Name");
         add(registryName);
 
         add(new JLabel("Display Name:"));
-        JTextField displayName = NormalLookingComponent(new JTextField());
+        JTextField displayName = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         displayName.setToolTipText("Display Name");
         add(displayName);
         JButton autoRegistryName = new JButton("Generate registry name");
@@ -38,44 +38,44 @@ public class GregtechMaterialCreator extends JPanel {
         add(autoRegistryName);
 
         add(new JLabel("Components:"));
-        JTextField components = NormalLookingComponent(new JTextField());
+        JTextField components = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         components.setToolTipText("Components");
         add(components);
 
         JCheckBox customFormula = new JCheckBox("Custom Formula");
         add(customFormula);
-        JTextField formula = NormalLookingComponent(new JTextField());
+        JTextField formula = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         formula.setToolTipText("Formula");
         add(formula);
 
-        JComboBox<String> type = NormalLookingComponent(new JComboBox<>(new String[]{"ingot", "dust"}));
+        JComboBox<String> type = NormalLookingComponentFactory.normalLookingComponent(new JComboBox<>(new String[]{"ingot", "dust"}));
         add(type);
 
-        JCheckBox isCable = NormalLookingComponent(new JCheckBox("Is Cable"));
+        JCheckBox isCable = NormalLookingComponentFactory.normalLookingComponent(new JCheckBox("Is Cable"));
         add(isCable);
 
 
-        JComboBox<String> voltage = NormalLookingComponent(new JComboBox<>(GregtechVoltages.voltages));
+        JComboBox<String> voltage = NormalLookingComponentFactory.normalLookingComponent(new JComboBox<>(GregtechVoltages.voltages));
         add(voltage);
 
         JCheckBox isSuperconductor = new JCheckBox("Is Superconductor");
         add(isSuperconductor);
 
         add(new JLabel("Energy Loss:"));
-        JTextField energyLoss = NormalLookingComponent(new JTextField());
+        JTextField energyLoss = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         energyLoss.setToolTipText("Energy Loss");
         add(energyLoss);
 
         add(new JLabel("Blast Temperature:"));
-        JTextField blastTemp = NormalLookingComponent(new JTextField());
+        JTextField blastTemp = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         add(blastTemp);
         add(new JLabel("Blast Gas:"));
-        JTextField blastGas = NormalLookingComponent(new JTextField());
+        JTextField blastGas = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         add(blastGas);
-        JComboBox<String> blastVoltage = NormalLookingComponent(new JComboBox<>(GregtechVoltages.voltages));
+        JComboBox<String> blastVoltage = NormalLookingComponentFactory.normalLookingComponent(new JComboBox<>(GregtechVoltages.voltages));
         add(blastVoltage);
         add(new JLabel("Blast Duration:"));
-        JTextField blastDuration = NormalLookingComponent(new JTextField());
+        JTextField blastDuration = NormalLookingComponentFactory.normalLookingComponent(new JTextField());
         add(blastDuration);
 
         JColorChooser colorChooser = new JColorChooser();
