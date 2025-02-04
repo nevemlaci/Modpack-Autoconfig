@@ -15,7 +15,10 @@ public class Main {
 
     public static void loadNumberOfRecipesWithSameOutput(){
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("numberOfRecipesWithSameOutput.data"))) {
-            GregtechRecipe.numberOfRecipesWithSameOutput = (HashMap<String, Integer>)(ois.readObject());
+            Object o = ois.readObject();
+            if(o instanceof HashMap){
+                GregtechRecipe.numberOfRecipesWithSameOutput = (HashMap<String, Integer>)o;
+            }
         } catch (IOException | ClassNotFoundException e) {
             GregtechRecipe.numberOfRecipesWithSameOutput = new HashMap<>();
         }

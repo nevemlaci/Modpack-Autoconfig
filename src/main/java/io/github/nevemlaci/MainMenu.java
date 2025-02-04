@@ -1,6 +1,7 @@
 package io.github.nevemlaci;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 import java.io.Serializable;
 
 public class MainMenu extends JFrame implements Serializable {
@@ -32,9 +33,9 @@ public class MainMenu extends JFrame implements Serializable {
 
         JMenu options = new JMenu("Options");
         menuBar.add(options);
-        JMenuItem workingDirectory = new JMenuItem("Change Working Directory...");
-        options.add(workingDirectory);
-        workingDirectory.addActionListener(e -> workingDirectorySelector());
+        JMenuItem workingDirectoryMenuItem = new JMenuItem("Change Working Directory...");
+        options.add(workingDirectoryMenuItem);
+        workingDirectoryMenuItem.addActionListener(e -> workingDirectorySelector());
 
 
 //        JButton newGregtechElement = NormalLookingComponentFactory.normalLookingComponent(new JButton("New Gregtech Material..."));
@@ -54,14 +55,25 @@ public class MainMenu extends JFrame implements Serializable {
     private void workingDirectorySelector(){
         JFileChooser workingDirectoryChooser = new JFileChooser(workingDirectory);
         workingDirectoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
         workingDirectoryChooser.setDialogTitle("Select Working Directory");
         workingDirectoryChooser.setApproveButtonText("Select");
-        workingDirectoryChooser.showOpenDialog(this);
 
+        workingDirectoryChooser.showOpenDialog(this);
+        var selectedWorkingDirectory = workingDirectoryChooser.getSelectedFile();
+        if (selectedWorkingDirectory == null) {
+            throw new NullWorkingDirectoryException();
+        }
         workingDirectory = workingDirectoryChooser.getSelectedFile().getAbsolutePath();
     }
 
     public String getWorkingDirectory() {
         return workingDirectory;
+    }
+
+    private static class NullWorkingDirectoryException extends RuntimeException {
+        public NullWorkingDirectoryException() {
+            super("Working directory not selected");
+        }
     }
 }
